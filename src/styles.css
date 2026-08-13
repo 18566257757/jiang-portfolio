@@ -31,7 +31,7 @@ html {
 
 body {
   margin: 0;
-  min-width: 320px;
+  min-width: 0;
   background:
     linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px), var(--bg);
@@ -320,6 +320,7 @@ a {
 }
 
 .hero-copy {
+  min-width: 0;
   max-width: 1120px;
 }
 
@@ -440,6 +441,7 @@ a {
   letter-spacing: 0;
   line-height: 0.98;
   text-wrap: balance;
+  overflow-wrap: anywhere;
 }
 
 .profile-copy > p:not(.section-label),
@@ -481,26 +483,33 @@ a {
 }
 
 .stat-card {
-  min-height: 116px;
+  display: flex;
+  min-height: 178px;
+  flex-direction: column;
+  justify-content: space-between;
   padding: 20px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: rgba(255, 255, 255, 0.035);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018)),
+    rgba(7, 12, 12, 0.8);
+  backdrop-filter: blur(18px) saturate(1.15);
+  -webkit-backdrop-filter: blur(18px) saturate(1.15);
 }
 
 .stat-card strong {
   display: block;
   color: var(--text);
-  font-size: clamp(28px, 2.1vw, 42px);
-  line-height: 1;
+  font-size: clamp(22px, 1.75vw, 32px);
+  line-height: 1.05;
 }
 
 .stat-card span {
   display: block;
-  margin-top: 16px;
+  margin-top: 24px;
   color: var(--muted);
-  font-size: 13px;
-  line-height: 1.5;
+  font-size: 14px;
+  line-height: 1.6;
 }
 
 .experience-rail {
@@ -570,6 +579,7 @@ a {
 
 .section-heading {
   display: grid;
+  min-width: 0;
   grid-template-columns: minmax(340px, 0.55fr) minmax(0, 0.45fr);
   align-items: end;
   gap: 80px;
@@ -914,6 +924,7 @@ a {
   position: relative;
   z-index: 2;
   display: grid;
+  min-width: 0;
   width: var(--max);
   min-height: 100vh;
   margin: 0 auto;
@@ -977,7 +988,7 @@ a {
 
 @media (max-width: 1080px) {
   :root {
-    --max: min(100vw - 34px, 1700px);
+    --max: min(1700px, calc(100vw - 34px));
   }
 
   .site-header {
@@ -1031,16 +1042,20 @@ a {
 
 @media (max-width: 720px) {
   .earth-webgl {
-    top: 45%;
-    left: 104%;
-    width: min(78vw, 50vh, 480px);
-    opacity: calc(0.46 - (var(--earth-progress) * 0.1));
+    top: 30%;
+    left: 78%;
+    width: min(92vw, 56vh, 520px);
+    opacity: calc(0.6 - (var(--earth-progress) * 0.2));
     transform: translate(
-        calc(-50% - (var(--earth-progress) * 36vw)),
-        calc(-50% + (var(--earth-progress) * 20vh))
+        calc(-50% - (var(--earth-progress) * 32vw)),
+        calc(-50% + (var(--earth-progress) * 18vh))
       )
-      scale(calc(1 + (var(--earth-progress) * 1.98)));
-    filter: drop-shadow(0 0 30px rgba(105, 190, 235, 0.16));
+      scale(calc(1 + (var(--earth-progress) * 1.72)));
+    filter: drop-shadow(0 0 38px rgba(105, 190, 235, 0.24));
+  }
+
+  .hero-copy {
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.78);
   }
 
   .brand-mark {
@@ -1054,7 +1069,14 @@ a {
   }
 
   .hero-copy h1 {
-    font-size: clamp(64px, 17vw, 96px);
+    font-size: 56px;
+    overflow-wrap: anywhere;
+  }
+
+  .profile-copy h2,
+  .section-heading h2,
+  .contact-footer h2 {
+    font-size: 38px;
   }
 
   .hero-actions,
@@ -1067,6 +1089,18 @@ a {
   .primary-button,
   .secondary-button {
     width: 100%;
+  }
+
+  .hero-actions .primary-button {
+    min-width: 0;
+    padding-inline: 6px;
+    font-size: 11px;
+  }
+
+  .hero-actions .primary-button .glass-surface__content {
+    min-width: 0;
+    gap: 6px;
+    padding-inline: 4px;
   }
 
   .section {
@@ -1088,6 +1122,24 @@ a {
     min-height: auto;
   }
 
+  .project-content {
+    padding: 26px 22px;
+  }
+
+  .project-number {
+    top: 20px;
+    right: 20px;
+    font-size: 48px;
+  }
+
+  .project-content p {
+    padding-right: 58px;
+  }
+
+  .project-content h3 {
+    font-size: 28px;
+  }
+
   .project-modal-layer {
     padding: 84px 16px 18px;
   }
@@ -1102,10 +1154,23 @@ a {
 
   .project-modal-content h2 {
     padding-right: 48px;
+    font-size: 28px;
+    overflow-wrap: normal;
+    word-break: normal;
   }
 
   .contact-footer h2 {
-    font-size: clamp(56px, 15vw, 88px);
+    font-size: 38px;
+  }
+}
+
+@media (max-width: 360px) {
+  .project-content h3 {
+    font-size: 24px;
+  }
+
+  .project-modal-content h2 {
+    font-size: 22px;
   }
 }
 

@@ -3,16 +3,15 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import {
   ArrowRight,
-  Bot,
   Building2,
   Database,
   DraftingCompass,
-  Leaf,
+  FileCheck2,
+  FlaskConical,
   Mail,
   MoveUpRight,
-  Palette,
   Phone,
-  Sparkles,
+  Waves,
   X,
 } from 'lucide-react';
 import GlassSurface from './components/GlassSurface.jsx';
@@ -67,21 +66,44 @@ function handleSectionNavigation(event, href, afterNavigate) {
   });
 }
 
-const stats = [
-  { value: '2027', label: 'BEng (Hons) Environmental Engineering and Sustainable Development' },
-  { value: '2,000+', label: 'retail records processed for BYO Cup campaign analysis' },
-  { value: '3', label: 'internship contexts across construction, WWF-HK, and monitoring work' },
-  { value: '3', label: 'languages: Mandarin, English, and Cantonese' },
+const profileSkills = [
+  {
+    title: 'ESG & GHG',
+    detail: 'HKEX ESG Reporting Code, Scope 1/2/3 accounting, boundary setting, emission factors, and disclosure QA/QC.',
+  },
+  {
+    title: 'Data & Automation',
+    detail: 'Python, SQL, large-record processing, issuer intelligence, and automated report generation.',
+  },
+  {
+    title: 'BIM & Carbon',
+    detail: 'Revit/BIM, AutoCAD, engineering drawing review, MiC, and carbon-emission calculation.',
+  },
+  {
+    title: 'Water Systems',
+    detail: 'Treatment design, secondary clarification, sand filtration, environmental monitoring, and water reuse.',
+  },
 ];
 
 const internshipExperience = [
   {
-    time: '07/2025 - 08/2025',
-    role: 'China Construction Installation Engineering - Intern',
+    time: '07/2026 - 08/2026',
+    role: 'PAL Advisory Limited - Intern',
     details: [
-      'Utilized Revit (BIM) to support green building work and sustainability assessments.',
-      'Performed site inspections on subway, hospital, and water plant projects, evaluating low-carbon construction and ESG practices.',
-      'Researched water recycling technologies in sewage treatment, assessing environmental benefits and energy-efficiency improvements.',
+      'Applied the HKEX ESG Reporting Code to review annual and ESG reports and quantify Scope 1, 2 and 3 GHG emissions for three companies, defining organizational and operational boundaries and applying appropriate emission factors.',
+      'Prepared traceable calculation workpapers and drafted, edited, and quality-checked ESG disclosures while documenting data sources, assumptions, gaps, and inconsistencies.',
+      'Developed a Codex-assisted workflow to batch-process 100,000+ electronic-forensics records and automation scripts to organize 1,000+ SFC records in a local database.',
+      'Built a Python- and SQL-based platform that processes 3,500+ HKEX-listed issuer records per run, generates tailored reports, and reduces end-to-end processing time by more than 90%.',
+    ],
+  },
+  {
+    time: '07/2025 - 08/2025',
+    role: 'China Construction Installation Engineering Co., Ltd. - Intern',
+    details: [
+      'Reviewed engineering drawings and Revit/BIM models to support coordination and site inspections for subway, hospital, and water-treatment-plant projects.',
+      'Used Revit quantity information to calculate project carbon emissions and support green-building and sustainability assessments.',
+      'Evaluated MiC and other low-carbon construction approaches by considering material waste, transportation demand, and site-related emissions.',
+      'Researched water-reuse technologies in sewage treatment and assessed environmental benefits and energy-efficiency improvement opportunities.',
     ],
   },
   {
@@ -89,18 +111,17 @@ const internshipExperience = [
     role: 'WWF-Hong Kong - Green City Initiative Project Intern',
     details: [
       'Applied point cloud 3D scanning and modeling to simulate rooftop renovation of cage homes in Sham Shui Po.',
-      'Conducted feasibility studies on solar energy integration to support sustainable development decisions.',
-      'Built a Python-based data analysis system to process retail data with more than 2,000 entries from bubble tea shops for the BYO Cup campaign.',
-      'Co-authored sustainability research reports aligned with WWF-HK conservation objectives.',
+      'Conducted feasibility studies on solar-energy integration to support low-carbon rooftop design.',
+      'Built a Python-based data-analysis system to process 2,000+ retail records for the BYO Cup campaign.',
+      "Co-authored sustainability research reports aligned with WWF-Hong Kong's conservation objectives.",
     ],
   },
   {
     time: '07/2021',
     role: 'Shenzhen Guochen Environmental Protection Technology Co., Ltd. - Intern',
     details: [
-      'Assisted in the full water quality monitoring cycle, including sampling, on-site testing, data recording, and analysis.',
-      'Drafted environmental monitoring reports and suggested optimization strategies.',
-      'Contributed to project implementation planning, strengthening technical skills and environmental awareness.',
+      'Completed water-quality sampling, on-site testing, data recording, and analysis across the environmental monitoring cycle.',
+      'Drafted environmental monitoring reports, proposed optimization measures, and supported project implementation planning.',
     ],
   },
 ];
@@ -108,68 +129,87 @@ const internshipExperience = [
 const workExperience = [
   {
     time: '09/2025 - 06/2026',
-    role: 'College of Undergraduate Studies (CUS), PolyU - Part-time Student Assistant',
+    role: 'College of Undergraduate Studies, PolyU - Part-time Student Assistant',
     details: [
-      'Assisted in organizing and promoting student activities.',
-      'Supported research on family and youth development through data collection, entry, and preliminary report drafting.',
-      'Contributed to project deliverables that informed faculty-led initiatives on student engagement.',
+      'Supported faculty research on family and youth development through data collection, data entry, and preliminary report drafting while assisting with student activities.',
     ],
   },
 ];
 
 const projects = [
   {
-    title: 'Green Charge Initiative Project',
-    type: 'Campus sustainability project',
+    title: 'The Role of pH in Arsenic Sequestration via Iron-Arsenic Coprecipitation',
+    type: 'Final Year Project / 2025 - 2026',
     summary:
-      'A campus green charging proposal that connects solar energy output, charging demand, site selection, maintenance planning, and student participation.',
+      'An experimental investigation into how strongly alkaline conditions affect arsenate sequestration, treatment performance, and residual management.',
     details: [
-      'Developed the project website using HTML and Python to provide information on green charging solutions.',
-      'Wrote a technical report analyzing campus solar panel energy output and charging demand to assess feasibility.',
-      'Coordinated with campus management on charging station site selection, considering renewable energy resources and user convenience.',
-      'Developed a maintenance plan and assessed usage and energy consumption.',
-      'Proposed shared power bank charging stations and a Green Coin payment system to encourage student participation in sustainable practices.',
+      'Investigated Fe(III)-As(V) coprecipitation at pH 7 and pH 12 using a fixed Fe:As molar ratio of 10:1.',
+      'Conducted time-resolved aqueous analysis, dynamic light scattering, zeta-potential measurements, SEM-EDS, XRD, ATR-FTIR, sequential extraction, and Visual MINTEQ aqueous-speciation modeling.',
+      'Found that Fe precipitated rapidly at both pH levels, while As(V) removal was nearly complete at pH 7 but only 12.66% after 24 hours at pH 12, informing pH control and treatment-process selection.',
     ],
-    tags: ['Solar energy', 'Charging demand', 'Green Coin'],
+    tags: ['Arsenic removal', 'Fe(III)-As(V)', 'SEM-EDS / XRD', 'Visual MINTEQ'],
+  },
+  {
+    title: 'Wastewater Treatment Plant Design',
+    type: 'Integrated Project for Environmental Control',
+    summary:
+      'A treatment-train design developed from influent characteristics, target effluent quality, process sizing, and performance verification.',
+    details: [
+      'Selected and integrated appropriate wastewater-treatment units based on influent characteristics and target effluent quality.',
+      'Performed engineering calculations for secondary clarification and sand filtration, including unit sizing and solids-removal performance checks.',
+      'Calculated final effluent TSS, verified the treatment train against the required target, and documented the design calculations in a technical report.',
+    ],
+    tags: ['Process design', 'Secondary clarification', 'Sand filtration', 'Effluent TSS'],
+  },
+  {
+    title: 'Green Charge Initiative Project',
+    type: 'Campus Sustainability Project / 05/2024',
+    summary:
+      'A feasibility-led campus charging proposal connecting solar output, user demand, site planning, maintenance, and participation incentives.',
+    details: [
+      'Analyzed campus solar-panel output, charging demand, expected usage, and energy consumption to assess project feasibility.',
+      'Coordinated charging-station site selection and prepared a maintenance plan; proposed shared power-bank stations with a Green Coin incentive mechanism.',
+    ],
+    tags: ['Solar feasibility', 'Charging demand', 'Site planning', 'Green Coin'],
   },
 ];
 
 const strengths = [
   {
-    icon: DraftingCompass,
-    title: 'Engineering-First Thinking',
+    icon: FileCheck2,
+    title: 'ESG & GHG Accounting',
     copy:
-      'I start from constraints, evidence, feasibility, and system boundaries before proposing environmental solutions.',
-  },
-  {
-    icon: Leaf,
-    title: 'Sustainable Development',
-    copy:
-      'My studies cover sustainable development strategy, environmental management systems, impact assessment, pollution studies, and environmental control.',
+      'HKEX ESG Reporting Code, Scope 1/2/3 accounting, boundary setting, emission-factor application, traceable workpapers, and disclosure QA/QC.',
   },
   {
     icon: Database,
-    title: 'Environmental Data Work',
+    title: 'Environmental Data Automation',
     copy:
-      'I can support environmental research through data collection, Python processing, data entry, reporting, and preliminary analysis.',
+      'Python and SQL workflows that turn large, fragmented records into prioritized information, tailored reports, and repeatable processing systems.',
+  },
+  {
+    icon: Waves,
+    title: 'Water & Wastewater Engineering',
+    copy:
+      'Treatment-train selection, secondary clarification, sand filtration, effluent verification, water-quality monitoring, and water-reuse research.',
+  },
+  {
+    icon: FlaskConical,
+    title: 'Laboratory & Process Research',
+    copy:
+      'Experimental design and interpretation across aqueous analysis, particle characterization, spectroscopy, mineralogy, sequential extraction, and speciation modeling.',
   },
   {
     icon: Building2,
-    title: 'Built Environment Exposure',
+    title: 'Low-Carbon Built Environment',
     copy:
-      'I have internship exposure to BIM, green building assessment, low-carbon construction, site inspections, and ESG practice evaluation.',
+      'Engineering drawing review, Revit/BIM quantity information, carbon-emission calculation, MiC evaluation, and multidisciplinary site coordination.',
   },
   {
-    icon: Bot,
-    title: 'Water and Wastewater',
+    icon: DraftingCompass,
+    title: 'Engineering-First Thinking',
     copy:
-      'My coursework and internship work include water supply, sewerage, wastewater treatment, water quality monitoring, and water recycling research.',
-  },
-  {
-    icon: Leaf,
-    title: 'Project Coordination',
-    copy:
-      'I can coordinate with project teams, campus stakeholders, and research groups while keeping sustainability objectives clear and practical.',
+      'I frame environmental problems through system boundaries, measurable evidence, engineering feasibility, and transparent assumptions before recommending action.',
   },
 ];
 
@@ -662,10 +702,10 @@ function Hero() {
       <div className="hero-inner">
         <div className="hero-copy">
           <h1>JIANG ZHIJIAN</h1>
-          <p className="hero-role">Sustainable Development / Environmental Engineering</p>
+          <p className="hero-role">Environmental Engineering / ESG / Sustainable Development</p>
           <p className="hero-text">
-            I focus on sustainable development and environmental engineering problems through field evidence,
-            technical research, data work, and practical feasibility thinking.
+            I use engineering analysis, environmental science, and data automation to turn sustainability
+            challenges into traceable, practical decisions.
           </p>
           <div className="hero-actions" aria-label="Portfolio actions">
             <GlassSurface as="a" className="primary-button" href="mailto:james.jiang2004@hotmail.com" height={52}>
@@ -685,8 +725,8 @@ function Hero() {
           </div>
         </div>
         <div className="hero-index" aria-label="Portfolio signal">
-          <span>Engineering Lens</span>
-          <strong>Systems thinking for low-carbon construction, water systems, solar feasibility, and environmental research.</strong>
+          <span>Engineering + ESG</span>
+          <strong>GHG accounting, water treatment, environmental research, low-carbon construction, and data systems.</strong>
         </div>
       </div>
     </section>
@@ -698,22 +738,22 @@ function Profile() {
     <section className="section profile-section" id="profile">
       <div className="profile-copy">
         <p className="section-label">PROFILE</p>
-        <h2>Sustainable development grounded in environmental engineering.</h2>
+        <h2>Engineering evidence for sustainable decisions.</h2>
         <p>
-          I am James Jiang, currently studying Bachelor of Engineering (Honours) in Environmental
-          Engineering and Sustainable Development at The Hong Kong Polytechnic University.
+          I am James Jiang, a Bachelor of Engineering (Honours) student in Environmental Engineering and
+          Sustainable Development at The Hong Kong Polytechnic University, graduating in 2027.
         </p>
         <p>
-          My academic and practical focus covers sustainable development strategy, air and noise pollution
-          studies, environmental chemistry, fluid mechanics, water supply and sewerage, water and wastewater
-          treatment, environmental management systems, and environmental impact assessment.
+          My work connects ESG reporting and GHG accounting with environmental data automation, water and
+          wastewater engineering, low-carbon construction, and laboratory research. I approach each problem
+          through clear system boundaries, auditable evidence, and engineering feasibility.
         </p>
       </div>
       <div className="stats-grid">
-        {stats.map((item) => (
-          <div className="stat-card" key={item.label}>
-            <strong>{item.value}</strong>
-            <span>{item.label}</span>
+        {profileSkills.map((skill) => (
+          <div className="stat-card" key={skill.title}>
+            <strong>{skill.title}</strong>
+            <span>{skill.detail}</span>
           </div>
         ))}
       </div>
@@ -731,7 +771,7 @@ function ExperienceSection() {
     <section className="section experience-section" id="experience">
       <div className="section-heading narrow">
         <p className="section-label">EXPERIENCE</p>
-        <h2>Sustainability and environmental engineering experience.</h2>
+        <h2>Environmental engineering, ESG, and data systems in practice.</h2>
       </div>
       {groups.map((group) => (
         <div className="experience-group" key={group.label}>
@@ -762,10 +802,10 @@ function Projects({ onSelectProject }) {
     <section className="section projects-section" id="projects">
       <div className="section-heading">
         <p className="section-label">SELECTED PROJECTS</p>
-        <h2>Project experience in sustainable development.</h2>
+        <h2>Research and design for environmental systems.</h2>
         <p>
-          This section keeps project work separate from internship and work experience. The current project is
-          listed according to the Project Experience section of my CV.
+          Projects connecting laboratory evidence, process design, and feasibility analysis to measurable
+          environmental outcomes.
         </p>
       </div>
       <div className="project-grid">
@@ -804,7 +844,7 @@ function Strengths() {
     <section className="section strengths-section" id="strengths">
       <div className="section-heading narrow">
         <p className="section-label">CAPABILITIES</p>
-        <h2>How I approach sustainable development problems.</h2>
+        <h2>Technical capabilities across engineering and ESG.</h2>
       </div>
       <div className="strength-grid">
         {strengths.map(({ icon: Icon, title, copy }) => (
@@ -893,7 +933,7 @@ function ContactFooter() {
     <footer className="contact-footer" id="contact">
       <div className="footer-inner">
         <p className="section-label">CONTACT</p>
-        <h2>Let's work on sustainable systems.</h2>
+        <h2>Let's build better environmental systems.</h2>
         <div className="footer-actions">
           <GlassSurface as="a" className="primary-button" href="mailto:james.jiang2004@hotmail.com" height={52}>
             <Mail size={18} aria-hidden="true" />
@@ -906,7 +946,7 @@ function ContactFooter() {
         </div>
         <div className="footer-meta">
           <span>Hong Kong / Shenzhen</span>
-          <span>Environmental Engineering / Sustainable Development</span>
+          <span>Environmental Engineering / ESG / Sustainable Development</span>
           <GlassSurface
             as="a"
             className="footer-top-button"
