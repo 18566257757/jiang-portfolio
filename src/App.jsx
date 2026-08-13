@@ -556,42 +556,96 @@ function EarthBackdrop() {
       return undefined;
     }
 
-    const particles = Array.from({ length: 110 }, (_, index) => ({
+    const orbitParticles = Array.from({ length: 110 }, (_, index) => ({
       angle: (index / 110) * Math.PI * 2 + Math.sin(index * 3.7) * 0.08,
       offset: Math.sin(index * 12.9898) * 0.5 + 0.5,
       speed: 0.24 + ((index * 17) % 23) / 120,
       size: 0.35 + ((index * 31) % 5) * 0.16,
     }));
 
-    let animationFrame = 0;
-    let time = 0;
+    const stars = Array.from({ length: 145 }, (_, index) => {
+      const random = (offset) => {
+        const value = Math.sin((index + 1) * (12.9898 + offset * 7.233)) * 43758.5453;
+        return value - Math.floor(value);
+      };
 
-    const draw = () => {
-      const ratio = window.devicePixelRatio || 1;
-      const width = window.innerWidth;
-      const height = window.innerHeight;
+      return {
+        x: random(1),
+        y: random(2),
+        depth: 0.22 + random(3) * 0.78,
+        size: 0.32 + random(4) * 1.08,
+        phase: random(5) * Math.PI * 2,
+        twinkle: 0.42 + random(6) * 1.1,
+        warmth: random(7),
+      };
+    });
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let animationFrame = 0;
+
+    const draw = (timestamp = 0) => {
+      const width = Math.max(1, canvas.clientWidth || window.innerWidth);
+      const height = Math.max(1, canvas.clientHeight || window.innerHeight);
+      const isMobile = width <= 720;
+      const ratio = Math.min(window.devicePixelRatio || 1, isMobile ? 1.35 : 1.7);
 
       if (canvas.width !== Math.round(width * ratio) || canvas.height !== Math.round(height * ratio)) {
         canvas.width = Math.round(width * ratio);
         canvas.height = Math.round(height * ratio);
-        canvas.style.width = `${width}px`;
-        canvas.style.height = `${height}px`;
         context.setTransform(ratio, 0, 0, ratio, 0, 0);
       }
 
       const p = progressRef.current;
-      const baseDiameter = Math.min(width * 0.6, height * 0.74, 780);
-      const diameter = baseDiameter + width * p * 1.5;
+      const time = reducedMotion ? 0 : timestamp * 0.001;
+      const baseDiameter = isMobile
+        ? Math.min(width * 0.92, height * 0.56, 520)
+        : Math.min(width * 0.6, height * 0.74, 780);
+      const earthScale = 1 + p * (isMobile ? 1.72 : 2.05);
+      const diameter = baseDiameter * earthScale;
       const radius = diameter * 0.52;
-      const centerX = width * (0.7 - p * 0.22);
-      const centerY = height * (0.54 + p * 0.2);
+      const centerX = width * ((isMobile ? 0.78 : 0.7) - p * (isMobile ? 0.32 : 0.22));
+      const centerY = height * ((isMobile ? 0.3 : 0.54) + p * (isMobile ? 0.18 : 0.2));
       const orbitRotation = p * -0.72 + time * 0.012;
+      const galaxyDriftX = (reducedMotion ? 0 : Math.sin(time * 0.045) * 0.55) - p * 2.6;
+      const galaxyDriftY = (reducedMotion ? 0 : Math.cos(time * 0.036) * 0.42) - p * 4.2;
+
+      backdropRef.current?.style.setProperty('--galaxy-drift-x', `${galaxyDriftX.toFixed(3)}%`);
+      backdropRef.current?.style.setProperty('--galaxy-drift-y', `${galaxyDriftY.toFixed(3)}%`);
 
       context.clearRect(0, 0, width, height);
-      particles.forEach((particle, index) => {
+
+      context.globalCompositeOperation = 'lighter';
+      const starCount = isMobile ? 88 : stars.length;
+
+      for (let index = 0; index < starCount; index += 1) {
+        const star = stars[index];
+        const travelX = time * star.depth * 0.32 - p * width * star.depth * 0.055;
+        const travelY = time * star.depth * 0.07 - p * height * star.depth * 0.13;
+        const x = ((star.x * width + travelX + width + 24) % (width + 48)) - 24;
+        const y = ((star.y * height + travelY + height + 24) % (height + 48)) - 24;
+        const twinkle = 0.56 + Math.sin(time * star.twinkle + star.phase) * 0.32;
+        const alpha = (0.13 + star.depth * 0.46) * twinkle;
+        const size = star.size * (0.56 + star.depth * 0.54);
+        const color = star.warmth > 0.88 ? '255, 226, 184' : star.warmth < 0.18 ? '137, 211, 255' : '218, 237, 245';
+
+        if (index % 31 === 0) {
+          context.beginPath();
+          context.fillStyle = `rgba(${color}, ${alpha * 0.12})`;
+          context.arc(x, y, size * 5.2, 0, Math.PI * 2);
+          context.fill();
+        }
+
+        context.beginPath();
+        context.fillStyle = `rgba(${color}, ${alpha})`;
+        context.arc(x, y, size, 0, Math.PI * 2);
+        context.fill();
+      }
+
+      orbitParticles.forEach((particle, index) => {
         const drift = Math.sin(time * particle.speed + particle.offset * 8) * 0.01;
         const angle = particle.angle + drift + orbitRotation;
-        const radial = radius + Math.sin(time * 0.5 + index) * 10;
+        const radial = radius + Math.sin(time * 0.5 + index) * (isMobile ? 6 : 10);
         const x = centerX + Math.cos(angle) * radial;
         const y = centerY + Math.sin(angle) * radial;
 
@@ -599,7 +653,7 @@ function EarthBackdrop() {
           return;
         }
 
-        const alpha = 0.08 + p * 0.2 + Math.sin(time + index) * 0.04;
+        const alpha = 0.07 + p * 0.16 + Math.sin(time + index) * 0.035;
         context.beginPath();
         context.fillStyle = `rgba(205, 235, 255, ${Math.max(0.06, alpha)})`;
         context.arc(x, y, particle.size, 0, Math.PI * 2);
@@ -617,7 +671,6 @@ function EarthBackdrop() {
         }
       });
 
-      time += 0.009;
       animationFrame = window.requestAnimationFrame(draw);
     };
 
@@ -630,7 +683,7 @@ function EarthBackdrop() {
 
   return (
     <div ref={backdropRef} className="earth-backdrop" aria-hidden="true">
-      <img className="earth-space-layer" src={assetPath('assets/near-earth-space.png')} alt="" />
+      <img className="galaxy-plate" src={assetPath('assets/milky-way-background.png')} alt="" />
       <div ref={earthSceneRef} className="earth-webgl" />
       <canvas ref={canvasRef} className="earth-particles" />
     </div>
