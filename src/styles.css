@@ -1044,18 +1044,21 @@ a {
 
 @media (max-width: 720px) {
   .galaxy-plate {
-    inset: -5%;
-    width: 110%;
-    height: 110%;
-    object-position: 24% center;
-    opacity: calc(0.9 - (var(--earth-progress) * 0.08));
+    inset: -9%;
+    width: 118%;
+    height: 118%;
+    object-position: 50% center;
+    opacity: calc(0.88 - (var(--earth-progress) * 0.07));
+    transform: translate3d(var(--galaxy-drift-x), var(--galaxy-drift-y), 0)
+      rotate(-9deg)
+      scale(calc(1.06 + (var(--earth-progress) * 0.035)));
   }
 
   .earth-webgl {
-    top: 30%;
-    left: 78%;
-    width: min(92vw, 56vh, 520px);
-    opacity: calc(0.6 - (var(--earth-progress) * 0.2));
+    top: 27%;
+    left: 82%;
+    width: min(80vw, 50vh, 460px);
+    opacity: calc(0.9 - (var(--earth-progress) * 0.22));
     transform: translate(
         calc(-50% - (var(--earth-progress) * 32vw)),
         calc(-50% + (var(--earth-progress) * 18vh))
